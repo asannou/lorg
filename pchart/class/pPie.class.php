@@ -33,10 +33,10 @@
   {
    var $pChartObject;
    var $pDataObject;
-   var $LabelPos = "" ;
+   var $LabelPos = [] ;
 
    /* Class creator */
-   function pPie($Object,$pDataObject)
+   function __construct($Object,$pDataObject)
     {
      /* Cache the pChart object reference */
      $this->pChartObject = $Object;
@@ -729,7 +729,7 @@
      /* Do we have an abscissa serie defined? */
      if ( $Data["Abscissa"] == "" ) { return(PIE_NO_ABSCISSA); }
 
-     $Boundaries = ""; $Boundaries["L"] = $X; $Boundaries["T"] = $Y; $Boundaries["R"] = 0; $Boundaries["B"] = 0; $vY = $Y; $vX = $X;
+     $Boundaries = []; $Boundaries["L"] = $X; $Boundaries["T"] = $Y; $Boundaries["R"] = 0; $Boundaries["B"] = 0; $vY = $Y; $vX = $X;
      foreach($Data["Series"][$Data["Abscissa"]]["Data"] as $Key => $Value)
       {
        $BoxArray = $this->pChartObject->getTextBox($vX+$BoxSize+4,$vY+$BoxSize/2,$FontName,$FontSize,0,$Value);
@@ -860,25 +860,23 @@
    function writeShiftedLabels()
     {
      if ( $this->LabelPos == [] ) { return(0); }
-     foreach($this->LabelPos as $Key => $Settings)
-      {
-       $X1 = $Settings["X1"]; $Y1 = $Settings["Y1"];
-       $X2 = $Settings["X2"]; $Y2 = $Settings["Y2"];
-       $X3 = $Settings["X3"];
-       $Angle = $Settings["Angle"];
-       $Label = $Settings["Label"];
+     $Settings = $this->LabelPos;
+     $X1 = $Settings["X1"]; $Y1 = $Settings["Y1"];
+     $X2 = $Settings["X2"]; $Y2 = $Settings["Y2"];
+     $X3 = $Settings["X3"];
+     $Angle = $Settings["Angle"];
+     $Label = $Settings["Label"];
 
-       $this->pChartObject->drawArrow($X2,$Y2,$X1,$Y1,array("Size"=>8));
-       if ( $Angle <= 180 )
-        {
-         $this->pChartObject->drawLine($X2,$Y2,$X3,$Y2);
-         $this->pChartObject->drawText($X3+2,$Y2,$Label,array("Align"=>TEXT_ALIGN_MIDDLELEFT));
-        }
-       else
-        {
-         $this->pChartObject->drawLine($X2,$Y2,$X3,$Y2);
-         $this->pChartObject->drawText($X3-2,$Y2,$Label,array("Align"=>TEXT_ALIGN_MIDDLERIGHT));
-        }
+     $this->pChartObject->drawArrow($X2,$Y2,$X1,$Y1,array("Size"=>8));
+     if ( $Angle <= 180 )
+      {
+       $this->pChartObject->drawLine($X2,$Y2,$X3,$Y2);
+       $this->pChartObject->drawText($X3+2,$Y2,$Label,array("Align"=>TEXT_ALIGN_MIDDLELEFT));
+      }
+     else
+      {
+       $this->pChartObject->drawLine($X2,$Y2,$X3,$Y2);
+       $this->pChartObject->drawText($X3-2,$Y2,$Label,array("Align"=>TEXT_ALIGN_MIDDLERIGHT));
       }
     }
 

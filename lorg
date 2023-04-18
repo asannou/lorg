@@ -1411,11 +1411,10 @@ function logline_to_httpdata($line, $regex_string, $regex_fields, $num_fields)
     return null;
 
   // create HTTP-data array
-  reset($regex_fields);
-  for ($n = 0; $n < $num_fields; ++$n)
-  {
-    $field = each($regex_fields);
-    $data[$field['key']] = $matches[$n + 1];
+  $n = 0;
+  foreach ($regex_fields as $key => $value) {
+    $data[$key] = $matches[$n + 1];
+    ++$n;
   }
 
   ### echo "\n======================= <DEBUG: \$data> =======================\n";
