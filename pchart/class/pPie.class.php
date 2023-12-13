@@ -822,20 +822,18 @@
 
        if ( $this->LabelPos != [] )
         {
+         $Settings = $this->LabelPos;
          $Done = FALSE;
-         foreach($this->LabelPos as $Key => $Settings)
+         if ( !$Done )
           {
-           if ( !$Done )
-            {
-             if ( $Angle <= 90 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"])))
-              { $this->shift(0,180,-($Height+2),$Reversed); $Done = TRUE; }
-             if ( $Angle > 90 && $Angle <= 180 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"])))
-              { $this->shift(0,180,-($Height+2),$Reversed); $Done = TRUE; }
-             if ( $Angle > 180 && $Angle <= 270 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"])))
-              { $this->shift(180,360,($Height+2),$Reversed); $Done = TRUE; }
-             if ( $Angle > 270 && $Angle <= 360 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"])))
-              { $this->shift(180,360,($Height+2),$Reversed); $Done = TRUE; }
-            }
+           if ( $Angle <= 90 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"])))
+            { $this->shift(0,180,-($Height+2),$Reversed); $Done = TRUE; }
+           if ( $Angle > 90 && $Angle <= 180 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"])))
+            { $this->shift(0,180,-($Height+2),$Reversed); $Done = TRUE; }
+           if ( $Angle > 180 && $Angle <= 270 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"])))
+            { $this->shift(180,360,($Height+2),$Reversed); $Done = TRUE; }
+           if ( $Angle > 270 && $Angle <= 360 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"])))
+            { $this->shift(180,360,($Height+2),$Reversed); $Done = TRUE; }
           }
         }
 
@@ -850,10 +848,8 @@
    function shift($StartAngle,$EndAngle,$Offset,$Reversed)
     {
      if ( $Reversed ) { $Offset = -$Offset; }
-     foreach($this->LabelPos as $Key => $Settings)
-      {
-       if ( $Settings["Angle"] > $StartAngle && $Settings["Angle"] <= $EndAngle ) { $this->LabelPos[$Key]["YTop"] = $Settings["YTop"] + $Offset; $this->LabelPos[$Key]["YBottom"] = $Settings["YBottom"] + $Offset; $this->LabelPos[$Key]["Y2"] = $Settings["Y2"] + $Offset; }
-      }
+     $Settings = $this->LabelPos;
+     if ( $Settings["Angle"] > $StartAngle && $Settings["Angle"] <= $EndAngle ) { $this->LabelPos[$Key]["YTop"] = $Settings["YTop"] + $Offset; $this->LabelPos[$Key]["YBottom"] = $Settings["YBottom"] + $Offset; $this->LabelPos[$Key]["Y2"] = $Settings["Y2"] + $Offset; }
     }
 
    /* Internally used to write the re-computed labels */
